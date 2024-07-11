@@ -5,7 +5,7 @@ const URI = process.env.NEO4J_URI;
 const USER = process.env.NEO4J_USERNAME;
 const PASSWORD = process.env.NEO4J_PASSWORD;
 
-let driver: Driver | undefined;
+let driver: Driver;
 
 try {
   driver = neo4j.driver(
