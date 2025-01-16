@@ -7,9 +7,10 @@ export default async function Home() {
   const { isAuthenticated, getUser } = getKindeServerSession();
   const user = await getUser();
 
+  // If the user is not authenticated, redirect to the login page
   if (!(await isAuthenticated())) {
     return redirect(
-      "/api/auth/login?post_login_redirect_url=http://localhost:3000/callback"
+      "/api/auth/login?post_login_redirect_url=https://heart-link-dating-app.vercel.app/callback"
     );
   }
 
