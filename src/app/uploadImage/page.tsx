@@ -1,7 +1,7 @@
 // src/components/UploadImage.tsx
 "use client";
 
-import { UploadButton } from "@/utils/uploadthing";
+import { UploadButton } from "../../utils/uploadthing";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { addUserImage } from "../../../neo4j.action";

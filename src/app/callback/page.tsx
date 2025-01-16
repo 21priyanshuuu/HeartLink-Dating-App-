@@ -6,7 +6,7 @@ import {
   getAllMatched,
 } from "../../../neo4j.action";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import HomePage from "@/components/HomePage";
+import HomePage from "../../components/HomePage";
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'force-no-store';
 export const revalidate = 0;
