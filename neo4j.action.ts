@@ -4,6 +4,8 @@ import { Neo4JUser } from "@/types";
 
 export const getUserById = async (id: string) => {
   console.log("get user by id method called!!!!!!");
+  console.log("Fetching user by ID with applicationId:", id);
+
   try {
     const result = await driver.executeQuery(
       `MATCH (u:User {applicationId: $applicationId}) RETURN u`,
@@ -22,6 +24,8 @@ export const createUser = async (user: Neo4JUser) => {
   console.log("create user method called!!!!!!");
   const { applicationId, email, firstname, lastname } = user;
   console.log(applicationId, email, firstname, lastname);
+  console.log("Creating user with:", { applicationId, email, firstname, lastname }); // Debug
+
 
   try {
     const result = await driver.executeQuery(
@@ -38,6 +42,8 @@ export const createUser = async (user: Neo4JUser) => {
 export const getUserWithNoConnection = async (
   id: string
 ): Promise<Neo4JUser[]> => {
+  console.log("Fetching users with no connection for applicationId:", id); // Debug
+
   try {
     const result = await driver.executeQuery(
       `MATCH (cu:User {applicationId: $applicationId}) 
@@ -59,6 +65,8 @@ export const neo4jSwipe = async (
   swipe: string,
   userId: string
 ): Promise<boolean> => {
+  console.log("Swiping with:", { id, userId, swipe }); // Debug
+2
   const type = swipe === "left" ? "DISLIKE" : "LIKE";
   await driver.executeQuery(
     `MATCH (cu :User{applicationId:$id}),(ou:User {applicationId:$userId}) CREATE (cu)-[:${type}]->(ou)`,
@@ -81,10 +89,17 @@ export const neo4jSwipe = async (
     );
     return Boolean(matches.length > 0);
   }
+  return false;
+
 };
 
 export const getAllMatched = async (id: string): Promise<Neo4JUser[]> => {
-  console.log("get all matched users method called!!!!!!");
+  if (!id) {
+    throw new Error('Application ID is required');
+  }
+
+  console.log("Getting all matched users for applicationId:", id);
+
   try {
     const result = await driver.executeQuery(
       `MATCH (cu:User {applicationId: $applicationId})-[:LIKE]->(ou:User)
@@ -103,6 +118,8 @@ export const getAllMatched = async (id: string): Promise<Neo4JUser[]> => {
 };
 export const deleteUser = async (id: string) => {
   console.log("delete user method called!!!!!!");
+  console.log("Deleting user with applicationId:", id); // Debug
+
   if (!driver) {
     throw new Error("Neo4j driver is not initialized");
   }
@@ -122,6 +139,8 @@ export const deleteUser = async (id: string) => {
 
 export const addUserImage = async (id: string, imageUrl: string) => {
   console.log("add user image method called!!!!!!");
+  console.log("Adding image to user:", { id, imageUrl }); // Debug
+
   if (!driver) {
     throw new Error("Neo4j driver is not initialized");
   }

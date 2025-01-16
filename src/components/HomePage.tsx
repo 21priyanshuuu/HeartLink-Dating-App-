@@ -22,7 +22,7 @@ import {
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 interface HomePageProps {
-  currentUser: Neo4JUser;
+  currentUser: Neo4JUser | null;
   users: Neo4JUser[];
 }
 
@@ -30,18 +30,24 @@ const HomePage: React.FC<HomePageProps> = ({ currentUser, users }) => {
   const { toast } = useToast();
 
   const handleSwipe = async (direction: string, userId: string) => {
-    const isMatch = await neo4jSwipe(
-      currentUser.applicationId,
-      direction,
-      userId
-    );
+    if (!currentUser) {
+      toast({
+        title: "Error",
+        description: "No user is currently logged in.",
+      });
+      return;
+    }
+  
+    const isMatch = await neo4jSwipe(currentUser.applicationId, direction, userId);
+    console.log("swiped")
     if (isMatch) {
       toast({
         title: "Match",
-        description: "Congratulations It's a Match!!!!",
+        description: "Congratulations! It's a Match!!!!",
       });
     }
   };
+  
 
   const onCardLeftScreen = (myIdentifier: string) => {
     console.log(myIdentifier + " left the screen");
@@ -67,19 +73,13 @@ const HomePage: React.FC<HomePageProps> = ({ currentUser, users }) => {
                       {user.firstname} {user.lastname}
                     </CardTitle>
                     <CardContent>
-                      {user.imageUrl ? (
-                        <img
-                          className="h-40 object-cover rounded-xl"
-                          src={user.imageUrl}
-                          alt="User Image"
-                        />
-                      ) : (
+                    
                         <img
                           className="h-40 object-cover rounded-xl"
                           src={`https://robohash.org/${user.applicationId}?set=set5`}
                           alt="Dummy Image"
                         />
-                      )}
+                      
                     </CardContent>
                     <CardDescription>{user.email}</CardDescription>
                   </CardHeader>

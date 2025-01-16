@@ -1,5 +1,4 @@
 import React from "react";
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import {
   createUser,
   getUserById,
@@ -8,8 +7,9 @@ import {
 } from "../../../neo4j.action";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import HomePage from "@/components/HomePage";
-import { driver } from "@/dbConnect";
-
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+export const revalidate = 0;
 async function Page() {
   const { isAuthenticated, getUser } = getKindeServerSession();
 
@@ -20,7 +20,7 @@ async function Page() {
 
   try {
     const user = await getUser();
-    console.log(user?.id);
+    console.log("this is user id im printing"+user?.id);
     const allMatch = await getAllMatched(user?.id as string);
     console.log(allMatch);
 
@@ -31,14 +31,16 @@ async function Page() {
       if (dbUser === null) {
         await createUser({
           applicationId: user.id,
-          email: user.email,
-          firstname: user.given_name,
-          lastname: user.family_name,
+          email: user.email || "dumyy@mail.com",
+          firstname: user.given_name || "john",
+          lastname: user.family_name || "doe",
         });
       }
     }
+    if(user.id!=null) {
     userWithNoConnection = await getUserWithNoConnection(user?.id as string);
     console.log(userWithNoConnection);
+  }
   } catch (error) {
     console.error("Error processing user:", error);
   }
@@ -47,7 +49,7 @@ async function Page() {
 
   return (
     <div className="bg-gradient-to-r from-amber-300	 to-orange-400">
-      <HomePage currentUser={me} users={userWithNoConnection} />
+      <HomePage currentUser={me} users={userWithNoConnection || []} />
     </div>
   );
 }
