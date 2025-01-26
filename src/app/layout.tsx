@@ -4,7 +4,7 @@ import { Inter as FontSans } from "next/font/google";
 import { cn } from "../lib/utils";
 import { Toaster } from "@/components/ui/toaster";
 import "@uploadthing/react/styles.css";
-import Navbars from "@/components/Navbars";
+import { Sidebar } from "../components/ui/sidebar";
 
 const inter = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -15,19 +15,22 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased ",
+          "min-h-screen bg-background font-sans antialiased",
           inter.variable
         )}
       >
-        <Navbars />
-        {children}
+        {/* Sidebar is hidden on small screens */}
+          <Sidebar />
+        
+
+        <main>{children}</main>
+
+        {/* Toaster Notifications */}
         <Toaster />
       </body>
     </html>

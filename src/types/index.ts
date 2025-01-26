@@ -1,5 +1,3 @@
-
-// types.ts
 export interface Neo4JUser {
   applicationId: string;
   email: string;

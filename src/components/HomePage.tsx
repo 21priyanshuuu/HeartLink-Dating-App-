@@ -3,7 +3,6 @@
 import { Neo4JUser } from "@/types";
 import { useToast } from "@/components/ui/use-toast";
 import React from "react";
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import TinderCard from "react-tinder-card";
 import {
   Card,
@@ -14,12 +13,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  createUser,
-  getUserById,
-  getUserWithNoConnection,
   neo4jSwipe,
 } from "../../neo4j.action";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 interface HomePageProps {
   currentUser: Neo4JUser | null;

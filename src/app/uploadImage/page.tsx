@@ -39,7 +39,7 @@ export default function UploadImage() {
               console.log("Files: ", res);
               setimageurl(res[0].url);
               console.log(res[0].url);
-              addUserImage(user.id, res[0].url);
+              // addUserImage(user.id, res[0].url);
             }}
             onUploadError={(error: Error) => {
               alert(`ERROR! ${error.message}`);

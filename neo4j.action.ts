@@ -42,8 +42,7 @@ export const createUser = async (user: Neo4JUser) => {
 export const getUserWithNoConnection = async (
   id: string
 ): Promise<Neo4JUser[]> => {
-  console.log("Fetching users with no connection for applicationId:", id); // Debug
-
+  console.log("Fetching users with no connection for applicationId:", id); 
   try {
     const result = await driver.executeQuery(
       `MATCH (cu:User {applicationId: $applicationId}) 
