@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import Image from 'next/image';
 import {LogoutLink} from "@kinde-oss/kinde-auth-nextjs/components";
+import Font, {Text} from 'react-font'
 
 
 export function Sidebar() {
@@ -15,8 +16,12 @@ export function Sidebar() {
   const navButtons = [
     { label: "Home", onClick: () => router.push("/") },
     { label: "Profile", onClick: () => router.push("/profile") },
-    { label: "Messages", onClick: () => router.push("/messages") },
-    { label: "Settings", onClick: () => router.push("/settings") },
+    { label: "Find Someone", onClick: () => router.push("/opemai") },
+    { label: "Match", onClick: () => router.push("/match") },
+    { label: "Messages", onClick: () => router.push("/message") },
+    { label: "Logout", onClick: () => <LogoutLink>Log out</LogoutLink> },
+
+
   ];
 
   // Toggle sidebar state
@@ -47,7 +52,7 @@ export function Sidebar() {
       </button>
 
       {/* Navigation Buttons */}
-      <div className="flex flex-col gap-2 p-4">
+      <div className="flex flex-col gap-2 p-4 text-bold">
         {navButtons.map((button, index) => (
           <button
             key={index}
@@ -56,8 +61,10 @@ export function Sidebar() {
           >
             {!isSidebarMinimized && button.label}
           </button>
+             
+
         ))}
-        <LogoutLink>Log out</LogoutLink>
+        
 
       </div>
 
@@ -72,7 +79,7 @@ export function Sidebar() {
           {!isSidebarMinimized && (
             <div>
               <p className="font-semibold">Priyanshu Singh</p>
-              <p className="text-sm text-gray-400">View Profile</p>
+              <p className="text-sm text-gray-400">Profile</p>
             </div>
           )}
         </div>

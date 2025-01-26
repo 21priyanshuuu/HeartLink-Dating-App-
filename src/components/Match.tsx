@@ -17,7 +17,7 @@ interface MatchProps {
 const Match: React.FC<MatchProps> = ({ users, currentUser }) => {
   return (
     <div>
-      <div className="w-full h-screen flex justify-center items-center bg-gradient-to-r from-amber-300 to-orange-400">
+      <div className="w-full h-screen flex justify-center items-center bg-openmai-bg">
         {users.length > 0 ? (
           users.map((user) => (
             <div className="w-96 max-w-xs mx-auto" key={user.applicationId}>
@@ -39,7 +39,7 @@ const Match: React.FC<MatchProps> = ({ users, currentUser }) => {
             </div>
           ))
         ) : (
-          <p>No matches found.</p>
+          <p className="text-white">No matches found</p>
         )}
       </div>
     </div>
