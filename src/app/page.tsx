@@ -12,7 +12,7 @@ export default async function Home() {
 
   if (!(await isAuthenticated())) {
     return redirect(
-      "/api/auth/login?post_login_redirect_url=https://heart-link-dating-app.vercel.app/callback"
+      "/api/auth/login?post_login_redirect_url=https://heart-link-dating-app.vercel.app/opemai"
     );
   }
 
